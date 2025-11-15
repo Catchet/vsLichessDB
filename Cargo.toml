@@ -5,7 +5,7 @@ edition = "2024"
 
 [dependencies]
 actix-web = "4"
+serde = { version = "1.0.228", features = ["derive"] }
 rocksdb = "0.24"
-serde = "1.0.228"
 shakmaty = "0.29"
 reqwest = { version = "0.12", features = ["json"] }
