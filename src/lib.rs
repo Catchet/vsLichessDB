@@ -1,4 +1,4 @@
-pub mod modules;
+pub mod errors;
 
 use std::sync::Arc;
 use rocksdb::DB;
