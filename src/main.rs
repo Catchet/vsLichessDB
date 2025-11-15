@@ -1,10 +1,7 @@
 use std::sync::Arc;
 use actix_web::{App, HttpServer, web};
 use rocksdb::{DB, Options};
-
-pub struct Cache {
-    db: Arc<DB>
-}
+use vs_lichess_db::ChessCache;
 
 #[actix_web::main]
 pub async fn main() -> std::io::Result<()> {
@@ -16,7 +13,7 @@ pub async fn main() -> std::io::Result<()> {
 
     HttpServer::new(|| {
         App::new()
-            .app_data(web::Data::new(Cache { db: db.clone() }))
+            .app_data(web::Data::new(ChessCache { db: db.clone() }))
     })
     .bind(("127.0.0.1", 8080))?
     .run()
