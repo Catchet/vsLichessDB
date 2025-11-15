@@ -17,3 +17,13 @@ impl ApiError {
         }
     }
 }
+
+impl From<reqwest::Error> for ApiError {
+    fn from(err: reqwest::Error) -> Self {
+        ApiError::new(
+            StatusCode::INTERNAL_SERVER_ERROR,
+            String::from("Could not complete remote request"),
+            err.to_string(),
+        )
+    }
+}
