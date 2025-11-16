@@ -27,3 +27,13 @@ impl From<reqwest::Error> for ApiError {
         )
     }
 }
+
+impl From<shakmaty::fen::ParseFenError> for ApiError {
+    fn from(err: shakmaty::fen::ParseFenError) -> Self {
+        ApiError::new(
+            StatusCode::INTERNAL_SERVER_ERROR,
+            String::from("Could not parse FEN"),
+            err.to_string(),
+        )
+    }
+}
