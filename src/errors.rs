@@ -28,6 +28,16 @@ impl From<reqwest::Error> for ApiError {
     }
 }
 
+impl From<rocksdb::Error> for ApiError {
+    fn from(err: rocksdb::Error) -> Self {
+        ApiError::new(
+            StatusCode::INTERNAL_SERVER_ERROR,
+            String::from("Database error"),
+            err.to_string(),
+        )
+    }
+}
+
 impl From<shakmaty::fen::ParseFenError> for ApiError {
     fn from(err: shakmaty::fen::ParseFenError) -> Self {
         ApiError::new(
