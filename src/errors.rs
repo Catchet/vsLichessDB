@@ -16,6 +16,14 @@ impl ApiError {
             error,
         }
     }
+
+    pub fn msg(status_code: StatusCode, message: &str) -> ApiError {
+        ApiError {
+            status_code: status_code.to_string(),
+            message: String::from(message),
+            error: String::from("ApiError"),
+        }
+    }
 }
 
 impl From<reqwest::Error> for ApiError {
