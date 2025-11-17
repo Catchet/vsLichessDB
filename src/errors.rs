@@ -1,7 +1,9 @@
-use actix_web::http::StatusCode;
+use actix_web::{HttpResponse, ResponseError, http::StatusCode};
+use derive_more::derive::Display;
 use serde::Serialize;
 
-#[derive(Serialize, Debug)]
+#[derive(Serialize, Display, Debug)]
+#[display("{message}")]
 pub struct ApiError {
     status_code: u16,
     message: String,
@@ -26,12 +28,23 @@ impl ApiError {
     }
 }
 
+impl ResponseError for ApiError {
+    fn status_code(&self) -> StatusCode {
+        StatusCode::from_u16(self.status_code).unwrap_or(StatusCode::INTERNAL_SERVER_ERROR)
+    }
+
+    fn error_response(&self) -> actix_web::HttpResponse<actix_web::body::BoxBody> {
+        HttpResponse::build(self.status_code())
+        .json(self)
+    }
+}
+
 impl From<reqwest::Error> for ApiError {
     fn from(err: reqwest::Error) -> Self {
         ApiError::new(
             StatusCode::INTERNAL_SERVER_ERROR,
             "Could not complete remote request",
-            err.into(),
+            err.to_string(),
         )
     }
 }
@@ -41,7 +54,7 @@ impl From<rocksdb::Error> for ApiError {
         ApiError::new(
             StatusCode::INTERNAL_SERVER_ERROR,
             "Database error",
-            err.into(),
+            err.to_string(),
         )
     }
 }
@@ -51,7 +64,7 @@ impl From<shakmaty::fen::ParseFenError> for ApiError {
         ApiError::new(
             StatusCode::INTERNAL_SERVER_ERROR,
             "Could not parse FEN",
-            err.into(),
+            err.to_string(),
         )
     }
 }
