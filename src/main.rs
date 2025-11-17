@@ -1,7 +1,7 @@
 use std::sync::Arc;
 use actix_web::{App, HttpServer, web};
 use rocksdb::{DB, Options};
-use vs_lichess_db::ChessCache;
+use vs_lichess_db::{ChessCache, modules::chess};
 
 #[actix_web::main]
 pub async fn main() -> std::io::Result<()> {
@@ -11,9 +11,10 @@ pub async fn main() -> std::io::Result<()> {
 
     let db = Arc::new(DB::open(&opts, db_path).expect("Failed to establish database"));
 
-    HttpServer::new(|| {
+    HttpServer::new(move || {
         App::new()
             .app_data(web::Data::new(ChessCache { db: db.clone() }))
+            .service(chess::router::controller())
     })
     .bind(("127.0.0.1", 8080))?
     .run()
