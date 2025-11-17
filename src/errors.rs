@@ -60,6 +60,16 @@ impl From<rocksdb::Error> for ApiError {
     }
 }
 
+impl From<serde_json::Error> for ApiError {
+    fn from(err: serde_json::Error) -> Self {
+        ApiError::new(
+            StatusCode::INTERNAL_SERVER_ERROR,
+            "Could not deserialize object",
+            err.to_string(),
+        )
+    }
+}
+
 impl From<shakmaty::fen::ParseFenError> for ApiError {
     fn from(err: shakmaty::fen::ParseFenError) -> Self {
         ApiError::new(
