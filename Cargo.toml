@@ -9,3 +9,4 @@ serde = { version = "1.0.228", features = ["derive"] }
 rocksdb = "0.24"
 shakmaty = "0.29"
 reqwest = { version = "0.12", features = ["json"] }
+rand = "0.9.2"
