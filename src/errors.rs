@@ -1,3 +1,5 @@
+use std::str;
+
 use actix_web::{HttpResponse, ResponseError, http::{StatusCode, header}, mime, web};
 use derive_more::derive::Display;
 use serde::Serialize;
@@ -69,6 +71,17 @@ impl From<serde_json::Error> for ApiError {
         )
     }
 }
+
+impl From<str::Utf8Error> for ApiError {
+    fn from(err: str::Utf8Error) -> Self {
+        ApiError::new(
+            StatusCode::INTERNAL_SERVER_ERROR,
+            "Could not deserialize object",
+            err.to_string(),
+        )
+    }
+}
+
 
 impl From<shakmaty::fen::ParseFenError> for ApiError {
     fn from(err: shakmaty::fen::ParseFenError) -> Self {
