@@ -1,7 +1,7 @@
-use std::sync::Arc;
 use actix_web::{App, HttpServer, web};
 use rocksdb::{DB, Options};
-use vs_lichess_db::{ChessCache, modules::chess};
+use std::sync::Arc;
+use vs_lichess_db::modules::{cache::models::ChessCache, chess};
 
 #[actix_web::main]
 pub async fn main() -> std::io::Result<()> {

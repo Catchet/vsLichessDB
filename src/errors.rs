@@ -1,6 +1,10 @@
 use std::str;
 
-use actix_web::{HttpResponse, ResponseError, http::{StatusCode, header}, mime, web};
+use actix_web::{
+    HttpResponse, ResponseError,
+    http::{StatusCode, header},
+    mime, web,
+};
 use derive_more::derive::Display;
 use serde::Serialize;
 
@@ -37,8 +41,8 @@ impl ResponseError for ApiError {
 
     fn error_response(&self) -> actix_web::HttpResponse<actix_web::body::BoxBody> {
         HttpResponse::build(self.status_code())
-        .insert_header(header::ContentType(mime::APPLICATION_JSON))
-        .json(web::Json(self))
+            .insert_header(header::ContentType(mime::APPLICATION_JSON))
+            .json(web::Json(self))
     }
 }
 
@@ -81,7 +85,6 @@ impl From<str::Utf8Error> for ApiError {
         )
     }
 }
-
 
 impl From<shakmaty::fen::ParseFenError> for ApiError {
     fn from(err: shakmaty::fen::ParseFenError) -> Self {
