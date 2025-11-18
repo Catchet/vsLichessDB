@@ -7,6 +7,7 @@ use actix_web::{
 };
 use derive_more::derive::Display;
 use serde::Serialize;
+use shakmaty::Chess;
 
 #[derive(Serialize, Display, Debug)]
 #[display("{message}")]
@@ -91,6 +92,16 @@ impl From<shakmaty::fen::ParseFenError> for ApiError {
         ApiError::new(
             StatusCode::INTERNAL_SERVER_ERROR,
             "Could not parse FEN",
+            err.to_string(),
+        )
+    }
+}
+
+impl From<shakmaty::PositionError<Chess>> for ApiError {
+    fn from(err: shakmaty::PositionError<Chess>) -> Self {
+        ApiError::new(
+            StatusCode::INTERNAL_SERVER_ERROR,
+            "Could not convert FEN to valid position",
             err.to_string(),
         )
     }
