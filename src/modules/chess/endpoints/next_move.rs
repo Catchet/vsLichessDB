@@ -6,11 +6,13 @@ use crate::{
     },
 };
 use actix_web::{
-    HttpResponse, post,
+    HttpResponse,
+    http::StatusCode,
+    post,
     web::{self, Json},
 };
 use serde::{Deserialize, Serialize};
-use shakmaty::fen::Fen;
+use shakmaty::{CastlingMode, Chess, Position, fen::Fen};
 
 #[derive(Deserialize)]
 pub struct CalcNextMoveInput {
@@ -32,6 +34,13 @@ pub async fn calculate_next_move(
 ) -> Result<HttpResponse, ApiError> {
     let input = input.into_inner();
     let fen: Fen = input.fen.parse()?;
+    let pos: Chess = fen.clone().into_position::<Chess>(CastlingMode::Standard)?;
+    if pos.is_game_over() {
+        return Err(ApiError::msg(
+            StatusCode::BAD_REQUEST,
+            "The game is already over",
+        ));
+    }
     let fen_str = fen.to_string();
     let key = fen_str.as_bytes();
     let cache = cache.get_ref().db.clone();
