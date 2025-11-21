@@ -7,21 +7,26 @@ import '../assets/board.css'
 import '../assets/style.css'
 
 
-init();
-export function init() {
-    vsRandom(document.getElementById("cg-wrap")!);
+// init();
+init("rnbqkbnr/ppppppp1/8/7p/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 2");
+export function init(fen?: string) {
+    let board = vsRandom(document.getElementById("cg-wrap")!, fen);
 }
 
 
-export function vsRandom(boardElem: HTMLElement) {
-    const chess = new Chess();
+export function vsRandom(boardElem: HTMLElement, fen?: string) {
+    const chess = new Chess(fen);
     const cg = Chessground(boardElem, {
+        fen: fen,
+        turnColor: toColour(chess),
         movable: {
-            color: "white",
+            color: toColour(chess),
             free: false,
             dests: toDests(chess),
         },
     });
+    if (toColour(chess) == "black")
+        cg.toggleOrientation();
     cg.set({
         movable: {
             events: {
