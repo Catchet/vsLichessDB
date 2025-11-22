@@ -7,10 +7,14 @@ export function setupControls() {
   });
 
   document.getElementById("start-btn")!.addEventListener("click", () => {
-    let fen = "r1bqk1nr/pppp1ppp/2n5/2b1p3/1PB1P3/5N2/P1PP1PPP/RNBQK2R b KQkq - 0 4";
+    let fen = getEnteredFen();
     let playSide: Color = getChosenSide();
     setupBoard(fen, playSide);
   });
+}
+
+export function getEnteredFen(): string {
+  return (document.getElementById("fen-input") as HTMLInputElement).value;
 }
 
 export function getChosenSide(): Color {
