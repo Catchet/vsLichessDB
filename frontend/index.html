@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,11 +6,21 @@
     <title>vsLichessDB</title>
   </head>
   <body>
-    <div id="app">
-      <section class="blue merida">
-        <div id="cg-wrap" class="cg-wrap"></div>
-     </section>
-    </div>
     <script type="module" src="/src/main.ts"></script>
+    <div id="app">
+      <div id="content-wrapper">
+        <div id="cg-wrap" class="cg-wrap blue merida"></div>
+        <div id="controls">
+          <button class="control-btn">Click me!</button>
+          <button class="glass-btn">Click me! 2</button>
+          <button class="dark-btn">Click me! 3</button>
+          <button id="play-btn" class="control-btn">Start ▶</button>
+          <div class="board-controls">
+            <button id="toggle-side-btn" class="control-btn">Flip board</button>
+            <button id="reset-btn" class="control-btn">Reset ⟳</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
