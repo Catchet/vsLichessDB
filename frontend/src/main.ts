@@ -8,13 +8,18 @@ import "../assets/board.css";
 import "../assets/style.css";
 
 let board: Api;
-let playSide: Color = "white";
 
 // init();
 init("rnbqkbnr/ppppppp1/8/7p/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 2");
 export function init(fen?: string) {
+  let playSide: Color = "white";
+  board = setupBoard(fen, playSide);
+}
+
+export function setupBoard(fen?: string, playSide?: Color): Api {
   if (board) board.destroy();
   board = vsRandom(document.getElementById("cg-wrap")!, fen, playSide);
+  return board;
 }
 
 export function vsRandom(
