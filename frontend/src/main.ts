@@ -3,17 +3,19 @@ import { Chessground } from "@lichess-org/chessground";
 import type { Api } from "@lichess-org/chessground/api";
 import type { Color } from "@lichess-org/chessground/types";
 import { toDests, toColour } from "./util.ts";
+import { setupControls } from "./controls.ts";
 import "../assets/chessground.css";
 import "../assets/board.css";
 import "../assets/style.css";
 
-let board: Api;
+export let board: Api;
 
 // init();
-init("rnbqkbnr/ppppppp1/8/7p/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 2");
-export function init(fen?: string) {
+init("r1bqk1nr/pppp1ppp/2n5/2b1p3/1PB1P3/5N2/P1PP1PPP/RNBQK2R b KQkq - 0 4");
+function init(fen?: string) {
   let playSide: Color = "white";
   board = setupBoard(fen, playSide);
+  setupControls();
 }
 
 export function setupBoard(fen?: string, playSide?: Color): Api {
