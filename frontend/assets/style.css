@@ -138,3 +138,41 @@ body {
 .cg-side-picker .cg-king-icon img {
   height: 85%;
 }
+
+.fen-fieldset {
+  box-sizing: border-box;
+  border: 1px solid #555;
+  border-radius: 6px;
+  position: relative;
+  margin: 0;
+}
+
+.fen-fieldset legend {
+  padding: 0 0.5rem;
+  color: #aaa;
+}
+
+.fen-fieldset:focus-within {
+  border-color: #80ca1e;
+}
+
+.fen-fieldset:focus-within legend {
+  color: #80ca1e;
+}
+
+#fen-input {
+  width: 100%;
+  font-size: 15px;
+  color: #eee;
+  background: #3a3a3a;
+  border: none;
+  outline: none;
+}
+
+#fen-input::placeholder {
+  color: #666;
+}
+
+#fen-input:focus {
+  outline: none;
+}
