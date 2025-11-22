@@ -6,8 +6,7 @@
  */
 
 .cg-wrap {
-  width: 320px;
-  height: 320px;
+  aspect-ratio: 1;
   position: relative;
   display: block;
 }
