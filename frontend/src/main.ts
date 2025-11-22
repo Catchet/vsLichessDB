@@ -1,20 +1,27 @@
+import { Chess } from "chess.js";
 import { Chessground } from "@lichess-org/chessground";
 import type { Api } from "@lichess-org/chessground/api";
-import { Chess } from "chess.js";
+import type { Color } from "@lichess-org/chessground/types";
 import { toDests, toColour } from "./util.ts";
 import "../assets/chessground.css";
 import "../assets/board.css";
 import "../assets/style.css";
 
-let playSide: "white" | "black" = "white";
+let board: Api;
+let playSide: Color = "white";
 
 // init();
 init("rnbqkbnr/ppppppp1/8/7p/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 2");
 export function init(fen?: string) {
-  let board = vsRandom(document.getElementById("cg-wrap")!, fen, playSide);
+  if (board) board.destroy();
+  board = vsRandom(document.getElementById("cg-wrap")!, fen, playSide);
 }
 
-export function vsRandom(boardElem: HTMLElement, fen?: string, playSide?: "white" | "black") {
+export function vsRandom(
+  boardElem: HTMLElement,
+  fen?: string,
+  playSide?: Color
+) {
   const delay = 300;
   const firstMove = false;
   const chess = new Chess(fen);
