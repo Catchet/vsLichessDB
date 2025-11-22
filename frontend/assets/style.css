@@ -71,6 +71,10 @@ body {
   box-shadow: none;
 }
 
+#reset-btn:hover {
+  background: #a42;
+}
+
 .glass-btn {
   color: #fff;
   border-radius: 10px;
