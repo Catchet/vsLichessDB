@@ -14,7 +14,24 @@
           <button class="control-btn">Click me!</button>
           <button class="glass-btn">Click me! 2</button>
           <button class="dark-btn">Click me! 3</button>
-          <button id="play-btn" class="control-btn">Start ▶</button>
+
+          <div class="cg-side-picker">
+            <label class="cg-option">
+              <input type="radio" name="side" value="white" checked />
+              <span class="cg-king-icon cg-option-white">
+                <img src="./assets/images/pieces/merida/wK.svg" alt="White" />
+              </span>
+            </label>
+
+            <label class="cg-option cg-option-black">
+              <input type="radio" name="side" value="black" />
+              <span class="cg-king-icon cg-option-black">
+                <img src="./assets/images/pieces/merida/bK.svg" alt="Black" />
+              </span>
+            </label>
+          </div>
+
+          <button id="start-btn" class="control-btn">Start ▶</button>
           <div class="board-controls">
             <button id="toggle-side-btn" class="control-btn">Flip board</button>
             <button id="reset-btn" class="control-btn">Reset ⟳</button>

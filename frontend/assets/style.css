@@ -96,3 +96,45 @@ body {
   border-color: #555;
   background: #262626;
 }
+
+.cg-side-picker {
+  display: inline-flex;
+  width: 100%;
+}
+
+.cg-side-picker .cg-option {
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+}
+
+.cg-side-picker .cg-option input {
+  display: none;
+}
+
+.cg-side-picker .cg-king-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  background: #262626;
+  /* transition: background 0.15s, box-shadow 0.15s; */
+}
+
+.cg-side-picker .cg-option-white {
+  border-radius: 6px 0px 0px 6px;
+}
+
+.cg-side-picker .cg-option-black {
+  border-radius: 0px 6px 6px 0px;
+}
+
+.cg-side-picker .cg-option input:checked + .cg-king-icon {
+  background: #629924;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 4px 0px inset;
+}
+
+.cg-side-picker .cg-king-icon img {
+  height: 85%;
+}
