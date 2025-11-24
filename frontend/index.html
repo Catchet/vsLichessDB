@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vsLichessDB</title>
+  </head>
+  <body>
+    <script type="module" src="/src/main.ts"></script>
+    <div id="app">
+      <div id="content-wrapper">
+        <div id="cg-wrap" class="cg-wrap blue cburnett"></div>
+        <div id="controls">
+          <fieldset class="fen-fieldset">
+            <legend>FEN</legend>
+            <input
+              type="text"
+              id="fen-input"
+              placeholder="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+            />
+          </fieldset>
+
+          <div class="cg-side-picker">
+            <label class="cg-option">
+              <input type="radio" name="side" value="white" checked />
+              <span class="cg-king-icon cg-option-white">
+                <img src="./assets/images/pieces/cburnett/wK.svg" alt="White" />
+              </span>
+            </label>
+
+            <label class="cg-option cg-option-black">
+              <input type="radio" name="side" value="black" />
+              <span class="cg-king-icon cg-option-black">
+                <img src="./assets/images/pieces/cburnett/bK.svg" alt="Black" />
+              </span>
+            </label>
+          </div>
+
+          <button id="start-btn" class="control-btn">Start ▶</button>
+          <div class="board-controls">
+            <button id="toggle-side-btn" class="control-btn">Flip board</button>
+            <button id="reset-btn" class="control-btn">Reset ⟳</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
