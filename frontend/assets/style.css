@@ -92,32 +92,6 @@ body {
   background: #a42;
 }
 
-.glass-btn {
-  color: #fff;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
-  transition: 0.15s;
-}
-
-.glass-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.dark-btn {
-  background: #101010;
-  color: #eaeaea;
-  border: 1px solid #333;
-  border-radius: 6px;
-  transition: 0.15s;
-}
-
-.dark-btn:hover {
-  border-color: #555;
-  background: #262626;
-}
-
 .cg-side-picker {
   display: inline-flex;
   width: 100%;
