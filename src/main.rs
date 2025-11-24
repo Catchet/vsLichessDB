@@ -1,3 +1,4 @@
+use actix_files::Files;
 use actix_web::{App, HttpServer, web};
 use rocksdb::{DB, Options};
 use std::sync::Arc;
@@ -15,6 +16,11 @@ pub async fn main() -> std::io::Result<()> {
         App::new()
             .app_data(web::Data::new(ChessCache { db: db.clone() }))
             .service(chess::router::controller())
+            .service(
+                Files::new("/", "./frontend/dist")
+                    .index_file("index.html")
+                    .prefer_utf8(true),
+            )
     })
     .bind(("127.0.0.1", 8080))?
     .run()
