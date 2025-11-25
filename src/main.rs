@@ -16,6 +16,7 @@ pub async fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .wrap(Logger::default())
+            .app_data(web::Data::new(reqwest::Client::new()))
             .app_data(web::Data::new(ChessCache { db: db.clone() }))
             .service(chess::router::controller())
     })
