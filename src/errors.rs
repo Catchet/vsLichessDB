@@ -57,8 +57,8 @@ impl From<reqwest::Error> for ApiError {
     }
 }
 
-impl From<rocksdb::Error> for ApiError {
-    fn from(err: rocksdb::Error) -> Self {
+impl From<sled::Error> for ApiError {
+    fn from(err: sled::Error) -> Self {
         ApiError::new(
             StatusCode::INTERNAL_SERVER_ERROR,
             "Database error",
