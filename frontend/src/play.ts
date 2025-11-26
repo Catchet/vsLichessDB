@@ -1,9 +1,10 @@
 import type { Api } from "@lichess-org/chessground/api";
 import type { Color } from "@lichess-org/chessground/types";
-import type { Chess, Move } from "chess.js";
+import type { Chess } from "chess.js";
 import { toColour, updateBoardState } from "./util";
+import { fetchNextMove } from "./net";
 
-export type MoveGenerator = (chess: Chess) => Move;
+export type MoveGenerator = (chess: Chess) => string;
 
 export function establishOpponent(
   cg: Api,
@@ -15,7 +16,7 @@ export function establishOpponent(
   cg.set({
     movable: {
       events: {
-        after: makeMoveGenerator(cg, chess, moveGenerator, delay),
+        after: makeMoveGenerator(cg, chess, delay),
       },
     },
   });
@@ -26,28 +27,30 @@ export function establishOpponent(
     }, delay);
 }
 
-function makeMoveGenerator(
-  cg: Api,
-  chess: Chess,
-  moveGenerator: MoveGenerator,
-  delay: number
-) {
-  return (orig: string, dest: string) => {
+function makeMoveGenerator(cg: Api, chess: Chess, delay: number) {
+  return async (orig: string, dest: string) => {
     chess.move({ from: orig, to: dest });
     if (chess.isCheck()) {
       cg.set({
         check: true,
       });
     }
-    setTimeout(() => {
-      const move = moveGenerator(chess);
-      updateBoardState(cg, chess, move);
-    }, delay);
+
+    await new Promise((resolve) => setTimeout(resolve, delay));
+
+    let move;
+    try {
+      move = await fetchNextMove(chess.fen());
+    } catch (err) {
+      move = makeRandomMove(chess);
+      console.error(err);
+    }
+    updateBoardState(cg, chess, move);
   };
 }
 
-export function makeRandomMove(chess: Chess): Move {
+export function makeRandomMove(chess: Chess): string {
   const moves = chess.moves({ verbose: true });
   const move = moves[Math.floor(Math.random() * moves.length)];
-  return move;
+  return move.san;
 }
