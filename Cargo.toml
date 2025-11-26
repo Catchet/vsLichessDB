@@ -7,9 +7,10 @@ edition = "2024"
 actix-web = "4"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.145"
-rocksdb = "0.24"
+sled = "0.34.7"
 shakmaty = "0.29"
 reqwest = { version = "0.12", features = ["json"] }
 rand = "0.9.2"
 derive_more = { version = "2.0.1", features = ["display"] }
 actix-files = "0.6.8"
+env_logger = "0.11.8"

@@ -34,7 +34,7 @@ pub struct ChessOpening {
 #[serde(rename_all = "camelCase")]
 pub struct LichessQueryParams {
     pub fen: String,
-    pub speeds: Vec<String>,
+    pub speeds: String,
     pub top_games: u8,
     pub recent_games: u8,
 }

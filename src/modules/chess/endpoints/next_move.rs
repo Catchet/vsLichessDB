@@ -1,8 +1,7 @@
 use crate::{
     errors::ApiError,
-    modules::{
-        cache::models::ChessCache,
-        chess::{models::ChessPosStats, query_lichess::query_lichess, util::select_random_move},
+    modules::chess::{
+        models::ChessPosStats, query_lichess::query_lichess, util::select_random_move,
     },
 };
 use actix_web::{
@@ -29,7 +28,7 @@ pub struct NextMove {
 #[post("next-move")]
 pub async fn calculate_next_move(
     client: web::Data<reqwest::Client>,
-    cache: web::Data<ChessCache>,
+    cache: web::Data<sled::Db>,
     input: Json<CalcNextMoveInput>,
 ) -> Result<HttpResponse, ApiError> {
     let input = input.into_inner();
@@ -43,7 +42,6 @@ pub async fn calculate_next_move(
     }
     let fen_str = fen.to_string();
     let key = fen_str.as_bytes();
-    let cache = cache.get_ref().db.clone();
 
     let stats: ChessPosStats;
     match cache.get(key)? {
@@ -53,7 +51,7 @@ pub async fn calculate_next_move(
         }
         None => {
             stats = query_lichess(client.get_ref(), fen).await?;
-            cache.put(key, serde_json::to_vec(&stats)?)?;
+            cache.insert(key, serde_json::to_vec(&stats)?)?;
         }
     }
 
