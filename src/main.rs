@@ -1,9 +1,9 @@
 use actix_web::{App, HttpServer, middleware::Logger, web};
-use std::sync::Arc;
-use vs_lichess_db::modules::{cache::models::ChessCache, chess};
+use vs_lichess_db::modules::chess;
 
 #[actix_web::main]
 pub async fn main() -> std::io::Result<()> {
+    let db_path = "./lichess_cache";
     let db = sled::open(db_path).expect("Failed to open sled database");
 
     let client = reqwest::Client::new();
@@ -13,8 +13,8 @@ pub async fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .wrap(Logger::default())
-            .app_data(web::Data::new(client))
-            .app_data(web::Data::new(db))
+            .app_data(web::Data::new(client.clone()))
+            .app_data(web::Data::new(db.clone()))
             .service(chess::router::controller())
     })
     .bind(("127.0.0.1", 8080))?
