@@ -1,4 +1,4 @@
-import { Chess, Move, SQUARES } from "chess.js";
+import { Chess, SQUARES } from "chess.js";
 import type { Color, Key } from "@lichess-org/chessground/types";
 import type { Api } from "@lichess-org/chessground/api";
 
@@ -19,8 +19,8 @@ export function toColour(chess: Chess): Color {
   return chess.turn() === "w" ? "white" : "black";
 }
 
-export function updateBoardState(cg: Api, chess: Chess, move: Move) {
-  chess.move(move.san);
+export function updateBoardState(cg: Api, chess: Chess, moveStr: string) {
+  const move = chess.move(moveStr);
   cg.move(move.from, move.to);
   cg.set({
     turnColor: toColour(chess),
