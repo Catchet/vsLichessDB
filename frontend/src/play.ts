@@ -6,10 +6,9 @@ import { fetchNextMove } from "./net";
 
 export type MoveGenerator = (chess: Chess) => string;
 
-export function establishOpponent(
+export async function establishOpponent(
   cg: Api,
   chess: Chess,
-  moveGenerator: MoveGenerator,
   playSide?: Color
 ) {
   const delay = 300;
@@ -20,11 +19,9 @@ export function establishOpponent(
       },
     },
   });
-  if (playSide !== toColour(chess))
-    setTimeout(() => {
-      const move = moveGenerator(chess);
-      updateBoardState(cg, chess, move);
-    }, delay);
+  if (playSide !== toColour(chess)) {
+    await makeDelayedMove(cg, chess, delay);
+  }
 }
 
 function makeMoveGenerator(cg: Api, chess: Chess, delay: number) {
@@ -35,18 +32,20 @@ function makeMoveGenerator(cg: Api, chess: Chess, delay: number) {
         check: true,
       });
     }
-
-    await new Promise((resolve) => setTimeout(resolve, delay));
-
-    let move;
-    try {
-      move = await fetchNextMove(chess.fen());
-    } catch (err) {
-      move = makeRandomMove(chess);
-      console.error(err);
-    }
-    updateBoardState(cg, chess, move);
+    await makeDelayedMove(cg, chess, delay);
   };
+}
+
+async function makeDelayedMove(cg: Api, chess: Chess, delay: number) {
+  await new Promise((resolve) => setTimeout(resolve, delay));
+  let move;
+  try {
+    move = await fetchNextMove(chess.fen());
+  } catch (err) {
+    move = makeRandomMove(chess);
+    console.error(err);
+  }
+  updateBoardState(cg, chess, move);
 }
 
 export function makeRandomMove(chess: Chess): string {

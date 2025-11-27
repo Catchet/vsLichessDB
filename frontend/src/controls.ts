@@ -1,6 +1,5 @@
 import type { Color } from "@lichess-org/chessground/types";
 import { board, setupBoard } from "./main";
-import { makeRandomMove } from "./play";
 
 export function setupControls() {
   document.getElementById("toggle-side-btn")!.addEventListener("click", () => {
@@ -10,7 +9,7 @@ export function setupControls() {
   document.getElementById("start-btn")!.addEventListener("click", () => {
     let fen = getEnteredFen();
     let playSide: Color = getChosenSide();
-    setupBoard(makeRandomMove, fen || undefined, playSide);
+    setupBoard(fen || undefined, playSide);
   });
 }
 
