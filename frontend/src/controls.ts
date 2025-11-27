@@ -9,7 +9,7 @@ export function setupControls() {
   document.getElementById("start-btn")!.addEventListener("click", () => {
     let fen = getEnteredFen();
     let playSide: Color = getChosenSide();
-    setupBoard(fen ? fen : undefined, playSide);
+    setupBoard(fen || undefined, playSide);
   });
 }
 

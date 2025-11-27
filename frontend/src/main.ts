@@ -4,6 +4,7 @@ import type { Api } from "@lichess-org/chessground/api";
 import type { Color } from "@lichess-org/chessground/types";
 import { toDests, toColour } from "./util.ts";
 import { setupControls } from "./controls.ts";
+import { establishOpponent } from "./play.ts";
 import "../assets/chessground.css";
 import "../assets/board.css";
 import "../assets/style.css";
@@ -20,17 +21,20 @@ function init(fen?: string) {
 
 export function setupBoard(fen?: string, playSide?: Color): Api {
   if (board) board.destroy();
-  board = vsRandom(document.getElementById("cg-wrap")!, fen, playSide);
-  return board;
+  const [newBoard, newChess] = createBoard(
+    document.getElementById("cg-wrap")!,
+    fen,
+    playSide
+  );
+  establishOpponent(newBoard, newChess, playSide);
+  return newBoard;
 }
 
-export function vsRandom(
+export function createBoard(
   boardElem: HTMLElement,
   fen?: string,
   playSide?: Color
-) {
-  const delay = 300;
-  const firstMove = false;
+): [Api, Chess] {
   const chess = new Chess(fen);
   const cg = Chessground(boardElem, {
     fen: fen,
@@ -46,49 +50,5 @@ export function vsRandom(
       check: true,
     },
   });
-  cg.set({
-    movable: {
-      events: {
-        after: randomPlay(cg, chess, delay, firstMove),
-      },
-    },
-  });
-  if (playSide !== toColour(chess))
-    setTimeout(() => makeRandomMove(cg, chess, firstMove), delay);
-  return cg;
-}
-
-export function randomPlay(
-  cg: Api,
-  chess: Chess,
-  delay: number,
-  firstMove: boolean
-) {
-  return (orig: string, dest: string) => {
-    chess.move({ from: orig, to: dest });
-    if (chess.isCheck()) {
-      cg.set({
-        check: true,
-      });
-    }
-    setTimeout(() => makeRandomMove(cg, chess, firstMove), delay);
-  };
-}
-
-export function makeRandomMove(cg: Api, chess: Chess, firstMove: boolean) {
-  const moves = chess.moves({ verbose: true });
-  const move = firstMove
-    ? moves[0]
-    : moves[Math.floor(Math.random() * moves.length)];
-  chess.move(move.san);
-  cg.move(move.from, move.to);
-  cg.set({
-    turnColor: toColour(chess),
-    check: chess.isCheck(),
-    movable: {
-      color: toColour(chess),
-      dests: toDests(chess),
-    },
-  });
-  cg.playPremove();
+  return [cg, chess];
 }
