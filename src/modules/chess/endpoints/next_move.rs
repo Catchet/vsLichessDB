@@ -5,10 +5,9 @@ use crate::{
     },
 };
 use actix_web::{
-    HttpResponse,
+    HttpResponse, get,
     http::StatusCode,
-    post,
-    web::{self, Json},
+    web::{self, Query},
 };
 use serde::{Deserialize, Serialize};
 use shakmaty::{CastlingMode, Chess, Position, fen::Fen};
@@ -25,11 +24,11 @@ pub struct NextMove {
     next_move: String, //Shakmaty struct? e2e4
 }
 
-#[post("next-move")]
+#[get("next-move")]
 pub async fn calculate_next_move(
     client: web::Data<reqwest::Client>,
     cache: web::Data<sled::Db>,
-    input: Json<CalcNextMoveInput>,
+    input: Query<CalcNextMoveInput>,
 ) -> Result<HttpResponse, ApiError> {
     let input = input.into_inner();
     let fen: Fen = input.fen.parse()?;
