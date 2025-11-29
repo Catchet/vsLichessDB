@@ -13,7 +13,7 @@ pub fn select_random_move(
     if total <= 0 {
         return Err(ApiError::msg(
             StatusCode::INTERNAL_SERVER_ERROR,
-            "Error selecting random move",
+            "Error selecting random move (not enough games)",
         ));
     }
     let mut rand_n = rand::rng().random_range(1..=total);
