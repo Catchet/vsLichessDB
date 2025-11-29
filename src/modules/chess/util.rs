@@ -6,7 +6,7 @@ use rand::Rng;
 pub fn select_random_move(
     pos_stats: ChessPosStats, /* settings: SelectionParameters */
 ) -> Result<String, ApiError> {
-    let mut total = 0;
+    let mut total: i64 = 0;
     for chess_move in pos_stats.moves.iter() {
         total += chess_move.white + chess_move.draws + chess_move.white;
     }

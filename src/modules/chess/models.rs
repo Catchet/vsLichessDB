@@ -3,9 +3,9 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize)]
 pub struct ChessPosStats {
     // as returned from Lichess API
-    pub white: i32,
-    pub draws: i32,
-    pub black: i32,
+    pub white: i64,
+    pub draws: i64,
+    pub black: i64,
     pub moves: Vec<ChessMoveStats>,
     // pub topGames: Vec<ChessGame>,
     pub opening: Option<ChessOpening>,
@@ -17,9 +17,9 @@ pub struct ChessMoveStats {
     pub uci: String,
     pub san: String,
     pub average_rating: i32,
-    pub white: i32,
-    pub draws: i32,
-    pub black: i32,
+    pub white: i64,
+    pub draws: i64,
+    pub black: i64,
     // pub game: Option<ChessGame>,
     pub opening: Option<ChessOpening>,
 }
