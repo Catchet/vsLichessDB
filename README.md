@@ -5,6 +5,11 @@ All data is gathered from the Lichess games database (hence the name) accessed t
 
 ---
 
+## Showcase
+![Showcase](./vs_lichess_db_showcase.png)
+
+---
+
 ## Requirements to run locally  
 - **Rust** for running the backend  
 - **Node** and **pnpm** for bundling the frontend  
