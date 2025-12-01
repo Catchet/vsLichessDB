@@ -97,6 +97,26 @@ impl From<shakmaty::fen::ParseFenError> for ApiError {
     }
 }
 
+impl From<shakmaty::uci::ParseUciMoveError> for ApiError {
+    fn from(err: shakmaty::uci::ParseUciMoveError) -> Self {
+        ApiError::new(
+            StatusCode::INTERNAL_SERVER_ERROR,
+            "Could not parse UCI move",
+            err.to_string(),
+        )
+    }
+}
+
+impl From<shakmaty::uci::IllegalUciMoveError> for ApiError {
+    fn from(err: shakmaty::uci::IllegalUciMoveError) -> Self {
+        ApiError::new(
+            StatusCode::INTERNAL_SERVER_ERROR,
+            "Could not parse UCI move (illegal move)",
+            err.to_string(),
+        )
+    }
+}
+
 impl From<shakmaty::PositionError<Chess>> for ApiError {
     fn from(err: shakmaty::PositionError<Chess>) -> Self {
         ApiError::new(
