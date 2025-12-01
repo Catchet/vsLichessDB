@@ -49,7 +49,7 @@ pub async fn calculate_next_move(
             stats = serde_json::from_str(json_str)?;
         }
         None => {
-            stats = query_lichess(client.get_ref(), fen).await?;
+            stats = query_lichess(client.get_ref(), &fen).await?;
             cache.insert(key, serde_json::to_vec(&stats)?)?;
         }
     }

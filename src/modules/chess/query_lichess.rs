@@ -6,7 +6,7 @@ use crate::{
 };
 
 const LICHESS_API_URL: &str = "https://explorer.lichess.ovh/lichess";
-pub async fn query_lichess(client: &reqwest::Client, fen: Fen) -> Result<ChessPosStats, ApiError> {
+pub async fn query_lichess(client: &reqwest::Client, fen: &Fen) -> Result<ChessPosStats, ApiError> {
     let params = LichessQueryParams {
         fen: fen.to_string(),
         speeds: String::from("blitz,rapid,classical,correspondence"),
