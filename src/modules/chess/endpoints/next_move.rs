@@ -10,7 +10,7 @@ use actix_web::{
     web::{self, Query},
 };
 use serde::{Deserialize, Serialize};
-use shakmaty::{CastlingMode, Chess, Position, fen::Fen};
+use shakmaty::{CastlingMode, Chess, Position, fen::Fen, san::San, uci::UciMove};
 
 #[derive(Deserialize)]
 pub struct CalcNextMoveInput {
@@ -55,8 +55,13 @@ pub async fn calculate_next_move(
     }
 
     let selected_move = select_random_move(stats)?;
+
+    let uci = selected_move.parse::<UciMove>()?;
+    let mv = uci.to_move(&pos)?;
+    let san = San::from_move(&pos, mv);
+
     let response = NextMove {
-        next_move: selected_move,
+        next_move: san.to_string(),
     };
     Ok(HttpResponse::Ok().json(response))
 }
