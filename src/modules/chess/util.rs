@@ -8,7 +8,7 @@ pub fn select_random_move(
 ) -> Result<String, ApiError> {
     let mut total: i64 = 0;
     for chess_move in pos_stats.moves.iter() {
-        total += chess_move.white + chess_move.draws + chess_move.white;
+        total += chess_move.white + chess_move.draws + chess_move.black;
     }
     if total <= 0 {
         return Err(ApiError::msg(
@@ -18,7 +18,7 @@ pub fn select_random_move(
     }
     let mut rand_n = rand::rng().random_range(1..=total);
     for chess_move in pos_stats.moves.into_iter() {
-        rand_n -= chess_move.white + chess_move.draws + chess_move.white;
+        rand_n -= chess_move.white + chess_move.draws + chess_move.black;
         if rand_n <= 0 {
             return Ok(chess_move.uci);
         }
