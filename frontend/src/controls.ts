@@ -1,9 +1,9 @@
 import type { Color } from "@lichess-org/chessground/types";
-import { board, setupBoard } from "./main";
+import { getBoard, setupBoard } from "./main";
 
 export function setupControls() {
   document.getElementById("toggle-side-btn")!.addEventListener("click", () => {
-    board.toggleOrientation();
+    getBoard().toggleOrientation();
   });
 
   document.getElementById("start-btn")!.addEventListener("click", () => {

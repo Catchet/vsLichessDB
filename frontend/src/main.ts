@@ -11,6 +11,14 @@ import "../assets/style.css";
 
 export let board: Api;
 
+export function setBoard(cg: Api) {
+  board = cg;
+}
+
+export function getBoard() {
+  return board;
+}
+
 // init();
 init("r1bqk1nr/pppp1ppp/2n5/2b1p3/1PB1P3/5N2/P1PP1PPP/RNBQK2R b KQkq - 0 4");
 function init(fen?: string) {
