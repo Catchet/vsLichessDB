@@ -1,0 +1,19 @@
+
+[x] Implement interaction with caching layer and move generator (Rust)
+
+[x] Start from FEN (and pick side)
+
+Settings
+    [ ] More restrictive/picky move generation. For example only select among the 80% most popular moves, or only select the most popular move.
+    [ ] Minimum delay between each move (ms)
+
+[ ] Use Lichess login tokens for looser rate limiting
+
+Optional:
+    [ ] Have the site give feedback on your performance
+        [ ] Option 1: Through an engine analysing on the way (maybe local?)
+        [ ] Option 2: Through move popularity
+        [ ] Option 3: Through move winrate
+
+    [ ] Drill mode: Play through a chosen PGN, have the UI tell you when you made an incorrect move
+
